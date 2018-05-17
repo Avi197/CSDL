@@ -1,0 +1,99 @@
+﻿@model IEnumerable<HelloWorldReact.Model.Timetable>
+
+@{
+    ViewBag.Title = "TestTKB";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>TestTKB</h2>
+<div id="container" class="content-wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Danh sách chức năng</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <p>
+                        @Html.ActionLink("Create New", "Create")
+                    </p>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Tenmonhoc)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.STC)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Lopmonhoc)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TenGV)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Thu)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Tiet)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.room)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Sosv)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Sosvdk)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Tenmonhoc)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.STC)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Lopmonhoc)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TenGV)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Thu)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Tiet)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.room)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Sosv)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Sosvdk)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>Visit <a href="http://techbrij.com">TechBrij.com</a> for more details.</p>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/react/react-0.12.2.min.js"></script>
