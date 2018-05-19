@@ -124,6 +124,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CoursetimeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TestTimetableController.cs" />
@@ -164,6 +165,7 @@
     <Content Include="Views\Home\coursetimereact.cshtml" />
     <Content Include="Views\Home\coursetime.cshtml" />
     <Content Include="Views\Home\subjects.cshtml" />
+    <Content Include="Views\Home\Course.cshtml" />
     <None Include="Views\Home\nationreact.cshtml" />
     <None Include="Views\Home\login.cshtml" />
     <Content Include="Web.config" />
@@ -203,7 +205,7 @@
     <Compile Include="Models\COURSETIME_OBJ.cs" />
     <Compile Include="Models\smt\BRANCH_OBJ.cs" />
     <Compile Include="Models\smt\BRANCH_BUS.cs" />
-    <Compile Include="Models\TestTimetable.cs" />
+    <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TIMETABLE_OBJ.cs" />
     <Compile Include="Models\TIMETABLE_BUS.cs" />
     <Compile Include="Models\smt\PROVINCE_BUS.cs" />
@@ -220,7 +222,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\nation.cshtml" />
-    <Content Include="Views\Home\TestTKB.cshtml" />
+    <Content Include="Views\Home\timetable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -232,6 +234,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="lte\" />
     <Folder Include="plugins\" />
+    <Folder Include="Views\Course\" />
     <Folder Include="Views\TestTimetable\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿@model List<IS.uni.COURSETIME_OBJ>
+﻿@model List<IS.uni.COURSE_OBJ>
 @{
     ViewBag.Title = "Danh sách quốc gia";
 }
@@ -18,15 +18,7 @@
 
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
-                            <tr>
-                            <tr>
-                                <th>STT</th>
-                                <th>Mã</th>
-                                <th>Codeview</th>
-                                <th>Thứ</th>
-                                <th>Tiết bắt đầu</th>
-                                <th>Tiết kết thúc</th>
-                            </tr>
+                            <tr></tr>
                         </thead>
                         <tbody>
                             @{
@@ -40,9 +32,26 @@
                                     <td>@i</td>
                                     <td>@it.CODE</td>
                                     <td>@it.CODEVIEW</td>
-                                    <td>@it.DAYINWEEK</td>
-                                    <td>@it.TIMESTART</td>
-                                    <td>@it.TIMEEND</td>
+                                    <td>@it.SUBJECTCODE</td>
+                                    <td>@it.SEMESTERCODE</td>
+                                    <td>@it.COURSEYEAR</td>
+                                    <td>@it.MAXSTUDENT</td>
+                                    <td>@it.SIGNEDSTUDENT</td>
+
+                                    @*public virtual System.String CODE
+                                        {get;set;}
+                                        public virtual System.String CODEVIEW
+                                        {get;set;}
+                                        public virtual System.String SUBJECTCODE
+                                        {get;set;}
+                                        public virtual System.Int32 SEMESTERCODE
+                                        {get;set;}
+                                        public virtual System.Int32 COURSEYEAR
+                                        {get;set;}
+                                        public virtual System.Int32 MAXSTUDENT
+                                        {get;set;}
+                                        public virtual System.Int32 SIGNEDSTUDENT
+                                        {get;set;}*@
                                     @*<td>
                                             <input type="button" className="btn btn-sm btn-primary" value="Sửa" onClick="return handleEdit(@it.CODE);" />
                                             &nbsp; &nbsp;
@@ -71,30 +80,31 @@
 
 </div>
 <script>
-    function handleremove(code) {
-        $.ajax({
-            url: "/course/delete",
-            data: { id: code }, //truyen id(=code) len de xoa
-            datatype: 'json',
-            success: function (data) {
-                if (data.sussess >= 0) {
-                    location.reload();
-                } else {
-                    //try to waiting
-                    alert('lỗi xóa bản ghi');
-                }
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.tostring());
-            }.bind(this)
-        });
-    }
-    function handleedit(code) {
-        alert('sua ban ghi:' + code);
-    }
-    function handlenew() {
-        alert('them moi ban ghi');
-    }
+                //function handleRemove(code) {
+                //    $.ajax({
+                //        url: "/TIMETABLE/delete",
+                //        data: { id: code }, //truyen id(=CODE) len de xoa
+                //        dataType: 'json',
+                //        success: function (data) {
+                //            if (data.sussess >= 0) {
+                //                location.reload();
+                //            } else {
+                //                //try to waiting
+                //                alert('Lỗi xóa bản ghi');
+                //            }
+                //        }.bind(this),
+                //        error: function (xhr, status, err) {
+                //            console.error(this.props.url, status, err.toString());
+                //        }.bind(this)
+                //    });
+                //}
+                //function handleEdit(code)
+                //{
+                //    alert('sua ban ghi:'+code);
+                //}
+                //function handleNew() {
+                //    alert('Them moi ban ghi');
+                //}
 </script>
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/react/react-0.12.2.min.js"></script>

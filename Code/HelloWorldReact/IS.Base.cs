@@ -44,10 +44,7 @@ namespace IS.Base
         private bool isTran = false;
         public __error _er = new __error();
 
-        //internal SqlConnection setConnection()
-        //{
-        //    throw new NotImplementedException();
-        //}
+       
 
         //public DBBase()
         //{
