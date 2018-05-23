@@ -1,81 +1,95 @@
-﻿@model IEnumerable<HelloWorldReact.Model.Timetable>
-
+﻿@model List<IS.uni.TIMETABLE_OBJ>
 @{
-    ViewBag.Title = "Timetab.e";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Danh sách quốc gia";
 }
-
-<h2>TestTKB</h2>
 <div id="container" class="content-wrapper">
+
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    @*<h3 class="box-title">Danh sách chức năng</h3>*@
+                    <h3 class="box-title">Danh sách quốc gia</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    @*<p>
-                        @Html.ActionLink("Create New", "Create")
-                    </p>*@
-                    <table class="table">
-                        <tr>
-                            <th>STT</th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.monhoc)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.stc)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.lopmonhoc)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.tengiangvien)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.thu)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.tiet)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.giangduong)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.sosv)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.sosvdk)
-                            </th>
-                            <th></th>
-                        </tr>
-                        @{
-                            var i = 0;
-                        }
-                        @foreach (var item in Model)
-                        {
-                            i++;
-                            <tr>
-                                <td>@i</td>
-                                <td>@item.monhoc</td>
-                                <td>@item.stc</td>
-                                <td>@item.lopmonhoc</td>
-                                <td>@item.tengiangvien</td>
-                                <td>@item.thu</td>
-                                <td>@item.tiet</td>
-                                <td>@item.giangduong</td>
-                                <td>@item.sosv</td>
-                                <td>@item.sosvdk</td>
-                            </tr>
-                        }
+                    <button className="btn btn-sm  btn-primary" id="btnAdd" onClick="return handleNew();">
+                        Thêm mới
+                    </button>
 
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Môn học</th>
+                                <th>STC</th>
+                                <th>Lớp môn học</th>
+                                <th>Tên giảng viên</th>
+                                <th>Tiết</th>
+                                <th>Thứ</th>
+                                <th>Giảng đường</th>
+                                <th>Số SV</th>
+                                <th>Số SVDK</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var i = 0;
+                            }
+                            @foreach (var item in Model)
+                            {
+                                i++;
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@item.monhoc</td>
+                                    <td>@item.stc</td>
+                                    <td>@item.lopmonhoc</td>
+                                    <td>@item.tengiangvien</td>
+                                    <td>@item.tiet</td>
+                                    <td>@item.thu</td>
+                                    <td>@item.giangduong</td>
+                                    <td>@item.sosv</td>
+                                    <td>@item.sosvdk</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr></tr>
+                        </tfoot>
                     </table>
                 </div>
+                <!-- /.box-body -->
             </div>
+
         </div>
+        <!-- /.col -->
     </div>
+
 </div>
-<p>Visit <a href="http://techbrij.com">TechBrij.com</a> for more details.</p>
+<script>
+    function handleremove(code) {
+        $.ajax({
+            url: "/course/delete",
+            data: { id: code }, //truyen id(=code) len de xoa
+            datatype: 'json',
+            success: function (data) {
+                if (data.sussess >= 0) {
+                    location.reload();
+                } else {
+                    //try to waiting
+                    alert('lỗi xóa bản ghi');
+                }
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.tostring());
+            }.bind(this)
+        });
+    }
+    function handleedit(code) {
+        alert('sua ban ghi:' + code);
+    }
+    function handlenew() {
+        alert('them moi ban ghi');
+    }
+</script>
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/react/react-0.12.2.min.js"></script>

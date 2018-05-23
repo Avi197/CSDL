@@ -126,9 +126,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CoursetimeController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Controllers\TestTimetableController.cs" />
-    <Compile Include="Controllers\TIMETABLEController.cs" />
     <Compile Include="Controllers\smt\BranchController.cs" />
     <Compile Include="Controllers\smt\ProvinceController.cs" />
     <Compile Include="Controllers\smt\NationController.cs" />
@@ -168,6 +165,7 @@
     <Content Include="Views\Home\subjects.cshtml" />
     <Content Include="Views\Home\smt\Course.cshtml" />
     <Content Include="Views\Home\timetablereact.cshtml" />
+    <Content Include="Views\Home\timetable.cshtml" />
     <None Include="Views\Home\smt\nationreact.cshtml" />
     <None Include="Views\Home\login.cshtml" />
     <Content Include="Web.config" />
@@ -224,7 +222,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\smt\nation.cshtml" />
-    <Content Include="Views\Home\timetable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
