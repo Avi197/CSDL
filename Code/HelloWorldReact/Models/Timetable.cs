@@ -12,6 +12,73 @@ namespace HelloWorldReact.Model
 {
     public class Timetable
     {
+        public class BusinessObjectID
+        {
+            public BusinessObjectID() { }
+            private System.String _CODE;
+
+            public BusinessObjectID(System.String mCODE)
+            {
+                _CODE = mCODE;
+
+            }
+
+            public System.String CODE
+            {
+                get { return _CODE; }
+                set { _CODE = value; }
+            }
+
+
+            public override bool Equals(object obj)
+            {
+                if (obj == this) return true;
+                if (obj == null) return false;
+
+                BusinessObjectID that = obj as BusinessObjectID;
+                if (that == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (this.CODE != that.CODE) return false;
+
+                    return true;
+                }
+
+            }
+
+
+            public override int GetHashCode()
+            {
+                return CODE.GetHashCode();
+            }
+
+        }
+        public BusinessObjectID _ID;
+        //main object
+        protected string _codeP = "{yyMMdd}{CCCC}";
+        protected string _codePattern
+        {
+            get { return _codeP; }
+            set { _codeP = value; }
+        }
+
+        //##fieldList##
+        public static System.String pre() { return "PRE"; }
+        public static System.String suf() { return "SUF"; }
+
+        public Timetable()
+        {
+            _ID = new BusinessObjectID();
+        }
+
+        public Timetable(BusinessObjectID id)
+        {
+            _ID = new BusinessObjectID();
+            _ID = id;
+        }
 
         [Display(Name = "Tên môn học")]
         public string monhoc { set; get; }
@@ -43,29 +110,9 @@ namespace HelloWorldReact.Model
         {
             string sql = "exec inthoikhoabieu @semester=1";
             SqlCommand cm = new SqlCommand();
-            List<Timetable> lidata = new List<Timetable>();
-            //SqlConnection con = new SqlConnection();
-            //SqlDataAdapter cmd = new SqlDataAdapter(sql,conn);
+            List<Timetable> lidata = new List<Timetable>();            
             cm.CommandText = sql;
             cm.CommandType = CommandType.Text;
-            //DataTable dt = new DataTable();
-            //Timetable strLH;
-
-            //for (int i = 0; i < dt.Rows.Count; i++)
-            //{
-            //    strLH = new Timetable();
-            //    strLH.Tenmonhoc = dt.Rows[i]["mon hoc"].ToString();
-            //    strLH.STC = Convert.ToInt32(dt.Rows[i]["STC"].ToString());
-            //    strLH.Lopmonhoc = dt.Rows[i]["lop mon hoc"].ToString();
-            //    strLH.TenGV = dt.Rows[i]["ten giang vien"].ToString();
-            //    strLH.Thu = dt.Rows[i]["thu"].ToString();
-            //    strLH.Tiet = dt.Rows[i]["tiet"].ToString();
-            //    strLH.room = dt.Rows[i]["giang duong"].ToString();
-            //    strLH.Sosv = Convert.ToInt32(dt.Rows[i]["so SV"].ToString());
-            //    strLH.Sosvdk = Convert.ToInt32(dt.Rows[i]["so SVDK"].ToString());
-            //    strlist.Add(strLH);
-            //}
-            //return strlist;
             DataSet ds = new DataSet();
             int ret = db.getCommand(ref ds, "Tmp", cm);
             if (ret < 0)
@@ -81,14 +128,14 @@ namespace HelloWorldReact.Model
                     Type myTableObject = typeof(Timetable);
                     System.Reflection.PropertyInfo[] selectFieldInfo = myTableObject.GetProperties();
 
-                    //Type myObjectType = typeof(Timetable.BusinessObjectID);
-                    //System.Reflection.PropertyInfo[] fieldInfo = myObjectType.GetProperties();
+                    Type myObjectType = typeof(Timetable.BusinessObjectID);
+                    System.Reflection.PropertyInfo[] fieldInfo = myObjectType.GetProperties();
 
                     //set object value
                     foreach (System.Reflection.PropertyInfo info in selectFieldInfo)
                     {
-                        //if (info.Name != "_ID")
-                        //{
+                        if (info.Name != "_ID")
+                        {
                             if (dr.Table.Columns.Contains(info.Name))
                             {
                                 if (!dr.IsNull(info.Name))
@@ -96,21 +143,21 @@ namespace HelloWorldReact.Model
                                     info.SetValue(obj, dr[info.Name], null);
                                 }
                             }
-                        //}
-                        //else
-                        //{
-                        //    //set id value
-                        //    Timetable.BusinessObjectID objid;
-                        //    objid = (TEACHER_OBJ.BusinessObjectID)info.GetValue(obj, null);
-                        //    foreach (System.Reflection.PropertyInfo info1 in fieldInfo)
-                        //    {
-                        //        if (dr.Table.Columns.Contains(info1.Name))
-                        //        {
-                        //            info1.SetValue(objid, dr[info1.Name], null);
-                        //        }
-                        //    }
-                        //    info.SetValue(obj, objid, null);
-                        //}
+                        }
+                        else
+                        {
+                            //set id value
+                            Timetable.BusinessObjectID objid;
+                            objid = (Timetable.BusinessObjectID)info.GetValue(obj, null);
+                            foreach (System.Reflection.PropertyInfo info1 in fieldInfo)
+                            {
+                                if (dr.Table.Columns.Contains(info1.Name))
+                                {
+                                    info1.SetValue(objid, dr[info1.Name], null);
+                                }
+                            }
+                            info.SetValue(obj, objid, null);
+                        }
                     }
                     lidata.Add(obj);
                 }

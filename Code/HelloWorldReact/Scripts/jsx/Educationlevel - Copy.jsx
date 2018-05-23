@@ -2,7 +2,7 @@
 //1 comportment lon nhat
 var App = React.createClass({
     getInitialState: function () { //Khởi tạo, data=list department
-        return { data: [], firsttime: 1 };
+        return { data: [],  firsttime: 1 };
     },
     componentWillMount: function () {
 
@@ -27,12 +27,12 @@ var App = React.createClass({
     loadDataW: function () {
 
         $.ajax({
-            url: '/timetable/getlist',
+            url: '/educationlevel/getlist',
             dataType: 'json',
             data: {
                 keysearchCodeView: $.trim($('#keysearch-CodeView').val()),
                 keysearchName: $.trim($('#keysearch-Name').val()),
-                //                page: homeConfig.pageIndex,
+//                page: homeConfig.pageIndex,
                 pageSize: 0//default from server
             },
             success: function (data) {
@@ -42,7 +42,7 @@ var App = React.createClass({
                 else {
                     alert("Lỗi không lấy được dữ liệu");
                 }
-                //                AppRendered.loadData();
+//                AppRendered.loadData();
                 //pagination(data.total, function () {
                 //    AppRendered.loadData();
 
@@ -67,29 +67,30 @@ var App = React.createClass({
     },
 
     handleNewRowSubmit: function () { //Them moi 1 ban ghi load lai du lieu
-        //    this.loadparent();
+    //    this.loadparent();
         this.loadData();
     },
     setEdit: function (title, obj) {
         console.log("Final setEit" + title);
         obj = obj || '';//omitted - missed
-        if (obj === '') {
+        if (obj === '')
+        {
             console.log("Đối tượng rỗng");
             this.clearInput();
             //set the curent parent to parrent
         }
-        else {
+        else
+        {
             console.log("Có giá trị");
             //set gia tri cho cac thanh phan giao dien
-            $("#monhoc").val(obj.monhoc);
-            $("#").val(obj.TIMESTART);
-            $("#TIMEEND").val(obj.TIMEEND);
-            $("#DAYINWEEK").val(obj.DAYINWEEK);
-            //$("#NAME").val(obj.NAME);
+            $("#CODE").val(obj.CODE);
+            $("#NAME").val(obj.NAME);
             $("#CODEVIEW").val(obj.CODEVIEW);
-            //$("#NOTE").val(obj.NOTE);
+            $("#NOTE").val(obj.NOTE);
+            $("#THEORDER").val(obj.THEORDER);
+            $("#COMPARELEVEL").val(obj.COMPARELEVEL);
 
-            //$("#LOCK").prop('checked', (obj.LOCK == 1));
+            $("#LOCK").prop('checked', (obj.LOCK == 1));
         }
         $("#UpdateModal").modal("show");
 
@@ -98,77 +99,60 @@ var App = React.createClass({
     clearInput: function () {
         console.log("Clear me");
         $("#CODE").val('');
-        $("#CODE").val(obj.CODE);
-        $("#TIMESTART").val(obj.TIMESTART);
-        $("#TIMEEND").val(obj.TIMEEND);
-        $("#DAYINWEEK").val(obj.DAYINWEEK);
-        //$("#NAME").val('');
+        $("#NAME").val('');
         $("#CODEVIEW").val('');
-        //$("#NOTE").val('');
-        //$("#LOCK").prop('checked', false);
+        $("#NOTE").val('');
+        $("#LOCK").prop('checked', false);
+        $("#THEORDER").val('');
+        $("#COMPARELEVEL").val('');
 
     },
-    //phuong thuc quan trong nhat-->render html la ngoai
-
-
-
-    //update???
+//phuong thuc quan trong nhat-->render html la ngoai
     render: function () {
         console.log("Ren the main");
         return (
-            <div>
-                <NewRow onRowSubmit={this.handleNewRowSubmit} />
+			<div>
+
+				<NewRow onRowSubmit={this.handleNewRowSubmit} />
 
                 <div id="listData">
 
 
-                    <div style={{ 'margin-bottom': '10px' }}>
-                        <div className="col-lg-12 col-md-12" style={{ 'margin-bottom': '10px' }}>
-                            <button className="btn btn-sm  btn-primary" id="btnAdd" onClick={() => this.setEdit("Thông báo")}>
-                                Thêm mới
+                     <div style={{'margin-bottom':'10px'}}>
+                         <div className="col-lg-12 col-md-12" style={{'margin-bottom':'10px'}}>
+                                <button className="btn btn-sm  btn-primary" id="btnAdd" onClick={() =>this.setEdit("Thông báo")}>
+                                    Thêm mới
                                 </button>
-                            &nbsp;
+                             &nbsp;
                                 <input type="button" className="btn btn-sm btn-default"
-                                value="Tìm kiếm" onClick={this.eventClick} />
-                        </div>
-                    </div>
-                    <div className="col-lg-12 col-md-12" id="div-search" style={{ 'margin-bottom': '10px', 'display': 'none' }}>
-                        <div className="col-lg-3 col-md-6">
-                            <label className="col-md-2 control-label">Mã</label>
-                            <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-CodeView" />
+                                       value="Tìm kiếm" onClick={this.eventClick} />
+                         </div>
+                     </div>
+                      <div className="col-lg-12 col-md-12" id="div-search" style={{'margin-bottom':'10px', 'display':'none'}}>
+                            <div className="col-lg-3 col-md-6">
+                                <label className="col-md-2 control-label">Mã</label>
+                                <div className="col-md-10">
+                                    <input type="text" className="form-control" id="keysearch-CodeView" />
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
-                            <label className="col-md-2 control-label">tiet bat dau</label>
-                            <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-Name" />
+                            <div className="col-lg-4 col-md-6">
+                                <label className="col-md-2 control-label">Tên</label>
+                                <div className="col-md-10">
+                                    <input type="text" className="form-control" id="keysearch-Name" />
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">tim
-                            <label className="col-md-2 control-label">tiet ket thuc</label>
-                            <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-CodeView" />
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <label className="col-md-2 control-label">thu</label>
-                            <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-dayinweek" />
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-12">
-                            <button type="button" className="btn btn-info" onClick={this.loadSearch}>
-                                <span className="glyphicon glyphicon-search"></span> Lọc
+                            <div className="col-lg-3 col-md-12">
+                                <button type="button" className="btn btn-info" onClick={this.loadSearch}>
+                                         <span className="glyphicon glyphicon-search"></span> Lọc
                                 </button>
-                        </div>
-                    </div>
+                            </div>
+                      </div>
 
 
                     <ListRow clist={this.state.data} startindex={this.state.startindex} loadData={this.loadData} setEdit={this.setEdit} />
                 </div>
-            </div>
-        );
+			</div>
+    );
     }
 });
 
@@ -188,7 +172,7 @@ var ListRow = React.createClass({
         $("#ConfirmModal").modal('hide');
         var code = $("#idRemove").val();
         $.ajax({
-            url: "/timetable/delete",
+            url: "/educationlevel/delete",
             data: { id: code }, //truyen id(=CODE) len de xoa
             dataType: 'json',
             success: function (data) {
@@ -220,31 +204,33 @@ var ListRow = React.createClass({
             //child function so that, this does mean thi window not the react object
             index++;
             console.log(index);
-            listRow.push(<RowDetail item={rowitem} index={index} loadData={that.loadData} setEdit={that.props.setEdit} />);
+            listRow.push(<RowDetail item={rowitem} index={index} loadData={that.loadData} setEdit={that.props.setEdit } />);
         });
         return (
-            <div id="listData">
+          <div id="listData">
 
-                <table id="example2" className="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Mã</th>
-                            <th>Tiet bat dau</th>
-                            <th>Tiet ket thuc</th>
-                            <th>Thu</th>
-                        </tr>
-                    </thead>
-                    <tbody>{listRow}</tbody>
-                </table>
+           <table id="example2" className="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                          <th>STT</th>
+                          <th>Mã</th>
+                          <th>Tên</th>
+                          <th>Thứ tự</th>
+                          <th>So sánh</th>
+                        <th>Ghi chú</th>
+                          <th>Chức năng</th>
+                    </tr>
+                </thead>
+              <tbody>{listRow}</tbody>
+           </table>
 
-                <div id="paginateBox">
-                    <div id="pagination" className="pagination">
+            <div id="paginateBox">
+                <div id="pagination" className="pagination">
 
-                    </div>
                 </div>
+            </div>
 
-                <div id="ConfirmModal" className="modal fade" role="dialog">
+             <div id="ConfirmModal" className="modal fade" role="dialog">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -261,9 +247,9 @@ var ListRow = React.createClass({
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        );
+             </div>
+          </div>
+          );
     }
 });
 
@@ -286,24 +272,25 @@ var RowDetail = React.createClass({
     render: function () {
         return (
             //Hiển thị một phần tử trên danh sách
-            <tr>
-                <td>{this.props.index}</td>
-                <td>{this.props.item.monhoc}</td>
-                <td>{this.props.item.stc}</td>
-                <td>{this.props.item.TIMEEND}</td>
-                <td>{this.props.item.DAYINWEEK}</td>
-                <td>
+			  <tr>
+				   <td>{this.props.index}</td>
+				  <td>{this.props.item.CODEVIEW}</td>
+				  <td>{this.props.item.NAME}</td>
+				  <td>{this.props.item.THEORDER}</td>
+				  <td>{this.props.item.COMPARELEVEL}</td>
+                    <td>{this.props.item.NOTE}</td>
+				  <td>
 
 
 
 
-                    <input type="button" className="btn btn-sm btn-primary" value="Sửa" onClick={() => this.props.setEdit("Sửa bản ghi", this.props.item)} />
-                    &nbsp; &nbsp;
+					  <input type="button" className="btn btn-sm btn-primary" value="Sửa" onClick={()=>this.props.setEdit("Sửa bản ghi", this.props.item)} />
+				      &nbsp; &nbsp;
                       <input type="button" className="btn btn-sm btn-danger" value="Xóa" onClick={this.handleRemove} />
 
-                </td>
-            </tr>
-        );
+				  </td>
+			  </tr>
+          );
     }
 });
 
@@ -328,26 +315,30 @@ var NewRow = React.createClass({
         var CODE = this.refs.CODE.getDOMNode().value;
         console.log("code");
 
-        //var NAME = this.refs.NAME.getDOMNode().value;
-        //console.log("name");
+        var NAME = this.refs.NAME.getDOMNode().value;
+        console.log("name");
 
         var CODEVIEW = this.refs.CODEVIEW.getDOMNode().value;
         console.log("codeview");
 
+       
 
+        var NOTE = this.refs.NOTE.getDOMNode().value;
+        console.log("note");
 
-        //var NOTE = this.refs.NOTE.getDOMNode().value;
-        //console.log("note");
-
-        //var LOCK = this.refs.LOCK.getDOMNode().checked ? 1 : 0;
-        //console.log("lock");
+        var LOCK = this.refs.LOCK.getDOMNode().checked ? 1 : 0;
+        console.log("lock");
+        var THEORDER = this.refs.THEORDER.getDOMNode().value;
+        var COMPARELEVEL = this.refs.COMPARELEVEL.getDOMNode().value;
 
         var data = {
             CODE: CODE,
             CODEVIEW: CODEVIEW,
             NAME: NAME,
             NOTE: NOTE,
-            LOCK: LOCK ? 1 : 0,
+            THEORDER: THEORDER,
+            COMPARELEVEL: COMPARELEVEL,
+            LOCK: LOCK  ? 1 : 0,
             thetype: $.trim($('#thetype').val()),
             keysearchCodeView: $.trim($('#keysearch-CodeView').val()),
             keysearchName: $.trim($('#keysearch-Name').val()),
@@ -366,27 +357,30 @@ var NewRow = React.createClass({
 
             //Add or edit 1 department
             $.ajax({
-                url: "/timetable/update",
+                url: "/educationlevel/update",
                 type: 'POST',
                 data: data,
                 dataType: 'json',
                 success: function (data) {
                     if (data.sussess >= 0) {
                         this.props.onRowSubmit(); //load lai du lieu
+                        //jquery set lai value
+                        if ($.trim(CODE) == "") {
+
+                            $("#titleOption").text("Thêm mới đơn vị");
+                        }
+                        $("#UpdateModal").modal("hide");
 
                     }
+                    else {
+                        alert('Lỗi cập nhật');
+}
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
                 }.bind(this)
             });
 
-            //jquery set lai value
-            if ($.trim(CODE) == "") {
-
-                $("#titleOption").text("Thêm mới đơn vị");
-            }
-            $("#UpdateModal").modal("hide");
 
             return false;
         }
@@ -401,7 +395,7 @@ var NewRow = React.createClass({
             console.log('Have file');
         }
         $.ajax({
-            url: "/timetable/post",
+            url: "/educationlevel/post",
             type: "POST",
             data: data,
             contentType: false,
@@ -421,8 +415,6 @@ var NewRow = React.createClass({
 
     },
 
-
-    //update
     render: function () {
         console.log("Ren new row here");
 
@@ -431,60 +423,72 @@ var NewRow = React.createClass({
         var inputStyle = { padding: '10px' };
         return (
 
-            <div className="modal fade" id="UpdateModal" role="dialog" data-backdrop="static" data-keyboard="false">
-                <div className="modal-dialog">
-                    <div className="modal-content ">
-                        <div className="modal-header" style={{ 'border-bottom': 'solid 2px #ccc' }}>
-                            <button type="button" className="close" data-dismiss="modal"></button>
-                            <h4 className="box-title" id="titleOption">Thêm bản ghi mới</h4>
-                        </div>
-                        <div className="modal-body modalScroll">
-                            <input type="text" className="form-control col-md-8 hidden" ref="CODE" id="CODE" />
-                            <form className="form-horizontal">
-                                <div className="box-body">
-                                    <div className="form-group col-sm-12">
-                                        <label className="col-sm-4 control-label">Mã</label>
-                                        <div className="col-sm-4 col-md-4">
-                                            <input type="text" className="form-control" ref="CODEVIEW" id="CODEVIEW" />
-                                        </div>
-                                    </div>
-                                    <div className="form-group col-sm-12">
-                                        <label className="col-sm-4 control-label">Tên</label>
-                                        <div className="col-sm-8">
-                                            <input type="text" className="form-control" ref="NAME" id="NAME" />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group col-sm-12">
-                                        <label className="col-sm-4 control-label">Không sử dụng</label>
-                                        <div className="col-sm-8">
-                                            <input type="checkbox" ref="LOCK" id="LOCK" />
-                                        </div>
-                                    </div>
-
-
-                                    <div className="form-group col-sm-12">
-                                        <label className="col-sm-4 control-label">Note</label>
-                                        <div className="col-sm-8">
-                                            <textarea ref="NOTE" id="NOTE" name="NOTE" rows="10" className="col-sm-12" ></textarea>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </form>
-
-                        </div>
-                        <div className="modal-footer" style={{ 'border-top': 'solid 2px #ccc' }}>
-                            <button className="btn btn-primary" id="cmdSave" onClick={this.handleSubmit}> Lưu </button>
-                            &nbsp;
-                        <button className="btn btn-danger" id="cmdCancel" data-dismiss="modal">
-                                Hủy
-                        </button>
-                        </div>
+              <div className="modal fade" id="UpdateModal" role="dialog" data-backdrop="static" data-keyboard="false">
+              <div className="modal-dialog">
+                  <div className="modal-content ">
+                    <div className="modal-header" style={{'border-bottom':'solid 2px #ccc' }}>
+                      <button type="button" className="close" data-dismiss="modal"></button>
+                       <h4 className="box-title" id="titleOption">Thêm bản ghi mới</h4>
                     </div>
-                </div>
-            </div>
+                    <div className="modal-body modalScroll">
+                             <input type="text" className="form-control col-md-8 hidden" ref="CODE" id="CODE" />
+            <form className="form-horizontal">
+                                            <div className="box-body">
+                                                <div className="form-group col-sm-12">
+                                                    <label className="col-sm-4 control-label">Mã</label>
+                                                    <div className="col-sm-4 col-md-4">
+                                                        <input type="text" className="form-control" ref="CODEVIEW" id="CODEVIEW" />
+                                                    </div>
+                                                </div>
+                                                 <div className="form-group col-sm-12">
+                                                    <label className="col-sm-4 control-label">Tên</label>
+                                                    <div className="col-sm-8">
+                                                        <input type="text" className="form-control" ref="NAME" id="NAME" />
+                                                    </div>
+                                                 </div>
+
+                                                 <div className="form-group col-sm-12">
+                                                    <label className="col-sm-4 control-label">Không sử dụng</label>
+                                                    <div className="col-sm-8">
+                                                        <input type="checkbox" ref="LOCK" id="LOCK" />
+                                                    </div>
+                                                 </div>
+
+
+                                                  <div className="form-group col-sm-12">
+                                                    <label className="col-sm-4 control-label">Note</label>
+                                                    <div className="col-sm-8">
+                                                        <textarea ref="NOTE" id="NOTE" name="NOTE" rows="10"  className="col-sm-12" ></textarea>
+                                                    </div>
+                                                  </div>
+                                                 <div className="form-group col-sm-12">
+                                                    <label className="col-sm-4 control-label">Thứ tự sắp xếp</label>
+                                                    <div className="col-sm-8">
+                                                        <input type="number" className="form-control" ref="THEORDER" id="THEORDER" />
+                                                    </div>
+                                                 </div>
+                                                 <div className="form-group col-sm-12">
+                                                    <label className="col-sm-4 control-label">Mức độ so sánh</label>
+                                                    <div className="col-sm-8">
+                                                        <input type="text" className="form-control" ref="COMPARELEVEL" id="COMPARELEVEL" />
+                                                    </div>
+                                                 </div>
+
+
+                                            </div>
+            </form>
+
+                    </div>
+                    <div className="modal-footer" style={{'border-top':'solid 2px #ccc' }}>
+                                 <button className="btn btn-primary" id="cmdSave" onClick={this.handleSubmit}> Lưu </button>
+                        &nbsp;
+                        <button className="btn btn-danger" id="cmdCancel" data-dismiss="modal">
+                            Hủy
+                        </button>
+                    </div>
+                  </div>
+              </div>
+              </div>
 
 
         );

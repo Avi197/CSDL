@@ -27,7 +27,7 @@ var App = React.createClass({
     loadDataW: function () {
 
         $.ajax({
-            url: '/nation/getlist',
+            url: '/coursetime/getlist',
             dataType: 'json',
             data: {
                 keysearchCodeView: $.trim($('#keysearch-CodeView').val()),
@@ -109,11 +109,14 @@ var App = React.createClass({
 
     },
     //phuong thuc quan trong nhat-->render html la ngoai
+
+
+
+    //update???
     render: function () {
         console.log("Ren the main");
         return (
             <div>
-
                 <NewRow onRowSubmit={this.handleNewRowSubmit} />
 
                 <div id="listData">
@@ -137,9 +140,21 @@ var App = React.createClass({
                             </div>
                         </div>
                         <div className="col-lg-4 col-md-6">
-                            <label className="col-md-2 control-label">Tên</label>
+                            <label className="col-md-2 control-label">tiet bat dau</label>
                             <div className="col-md-10">
                                 <input type="text" className="form-control" id="keysearch-Name" />
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6">tim
+                            <label className="col-md-2 control-label">tiet ket thuc</label>
+                            <div className="col-md-10">
+                                <input type="text" className="form-control" id="keysearch-CodeView" />
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6">
+                            <label className="col-md-2 control-label">thu</label>
+                            <div className="col-md-10">
+                                <input type="text" className="form-control" id="keysearch-dayinweek" />
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-12">
@@ -173,7 +188,7 @@ var ListRow = React.createClass({
         $("#ConfirmModal").modal('hide');
         var code = $("#idRemove").val();
         $.ajax({
-            url: "/nation/delete",
+            url: "/coursetime/delete",
             data: { id: code }, //truyen id(=CODE) len de xoa
             dataType: 'json',
             success: function (data) {
@@ -215,9 +230,9 @@ var ListRow = React.createClass({
                         <tr>
                             <th>STT</th>
                             <th>Mã</th>
-                            <th>Tên</th>
-                            <th>Ghi chú</th>
-                            <th>Chức năng</th>
+                            <th>Tiet bat dau</th>
+                            <th>Tiet ket thuc</th>
+                            <th>Thu</th>
                         </tr>
                     </thead>
                     <tbody>{listRow}</tbody>
@@ -274,8 +289,9 @@ var RowDetail = React.createClass({
             <tr>
                 <td>{this.props.index}</td>
                 <td>{this.props.item.CODEVIEW}</td>
-                <td>{this.props.item.NAME}</td>
-                <td>{this.props.item.NOTE}</td>
+                <td>{this.props.item.TIMESTART}</td>
+                <td>{this.props.item.TIMEEND}</td>
+                <td>{this.props.item.DAYINWEEK}</td>
                 <td>
 
 
@@ -350,7 +366,7 @@ var NewRow = React.createClass({
 
             //Add or edit 1 department
             $.ajax({
-                url: "/nation/update",
+                url: "/coursetime/update",
                 type: 'POST',
                 data: data,
                 dataType: 'json',
@@ -385,7 +401,7 @@ var NewRow = React.createClass({
             console.log('Have file');
         }
         $.ajax({
-            url: "/nation/post",
+            url: "/coursetime/post",
             type: "POST",
             data: data,
             contentType: false,
@@ -405,6 +421,8 @@ var NewRow = React.createClass({
 
     },
 
+
+    //update
     render: function () {
         console.log("Ren new row here");
 

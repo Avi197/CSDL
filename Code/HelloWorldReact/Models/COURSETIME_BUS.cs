@@ -133,45 +133,42 @@ namespace IS.uni
         {
             int ret = 0;
             DBBase db = new DBBase(ConfigurationSettings.AppSettings["connectionString"].ToString());
-            string sql = "INSERT INTO COURSETIME(code,timestart,timeend,dayinweek,codeview) VALUES(@code,@timestart,@timeend,@dayinweek,@codeview)";
+            string sql = "exec addcoursetime @start=@timestart @end=@timeend @day=@dayinweek";
             SqlCommand com = new SqlCommand();
             com.CommandText = sql;
             com.CommandType = CommandType.Text;
-            com.Parameters.Add("@code", SqlDbType.VarChar).Value = obj.CODE ;
+            //com.Parameters.Add("@code", SqlDbType.VarChar).Value = obj.CODE ;
+            com.Parameters.Add("@timestart", SqlDbType.VarChar).Value = obj.TIMESTART;
+            com.Parameters.Add("@timeend", SqlDbType.VarChar).Value = obj.TIMEEND;
+            com.Parameters.Add("@dayinweek", SqlDbType.VarChar).Value = obj.DAYINWEEK;
+            //com.Parameters.Add("@codeview", SqlDbType.VarChar).Value = obj.CODEVIEW;
+            ret = db.doCommand(ref com);
+            return ret;
+        }
+        public int Update(COURSETIME_OBJ obj)
+        {
+            int ret = 0;
+            DBBase db = new DBBase(ConfigurationSettings.AppSettings["connectionString"].ToString());
+            string sql = @"UPDATE COURSETIME SET 
+                    code=@code,
+                    ,timestart=@timestart
+                    ,timeend=@timeend
+                    ,dayinweek=@dayinweek
+                    ,codeview=@codeview
+                    WHERE code=@code_key
+                ";
+            SqlCommand com = new SqlCommand();
+            com.CommandText = sql;
+            com.CommandType = CommandType.Text;
+            com.Parameters.Add("@code", SqlDbType.VarChar).Value = obj.CODE;
             com.Parameters.Add("@timestart", SqlDbType.VarChar).Value = obj.TIMESTART;
             com.Parameters.Add("@timeend", SqlDbType.VarChar).Value = obj.TIMEEND;
             com.Parameters.Add("@dayinweek", SqlDbType.VarChar).Value = obj.DAYINWEEK;
             com.Parameters.Add("@codeview", SqlDbType.VarChar).Value = obj.CODEVIEW;
+            com.Parameters.Add("@code_key", SqlDbType.VarChar).Value = obj._ID.CODE;
             ret = db.doCommand(ref com);
             return ret;
         }
-        //public int Update(COURSETIME_OBJ obj)
-        //{
-        //    int ret = 0;
-        //    DBBase db = new DBBase(ConfigurationSettings.AppSettings["connectionString"].ToString());
-        //    string sql = @"UPDATE COURSETIME SET 
-        //            code=@code
-        //            ,codeview=@codeview
-        //            , name=@name
-        //            , note=@note
-        //            , edituser=@edituser
-        //            ,edittime=@edittime
-        //            ,lock=@lock
-        //            , lockdate=@lockdate
-        //            WHERE code=@code_key
-        //        ";
-        //    SqlCommand com = new SqlCommand();
-        //    com.CommandText = sql;
-        //    com.CommandType = CommandType.Text;
-        //    com.Parameters.Add("@code", SqlDbType.VarChar).Value = obj.CODE;
-        //    com.Parameters.Add("@timestart", SqlDbType.VarChar).Value = obj.TIMESTART;
-        //    com.Parameters.Add("@timeend", SqlDbType.VarChar).Value = obj.TIMEEND;
-        //    com.Parameters.Add("@dayinweek", SqlDbType.VarChar).Value = obj.DAYINWEEK;
-        //    com.Parameters.Add("@codeview", SqlDbType.VarChar).Value = obj.CODEVIEW;
-        //    com.Parameters.Add("@code_key", SqlDbType.VarChar).Value = obj._ID.CODE;
-        //    ret = db.doCommand(ref com);
-        //    return ret;
-        //}
         public int Delete(COURSETIME_OBJ.BusinessObjectID obj)
         {
             int ret = 0;
