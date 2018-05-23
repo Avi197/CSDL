@@ -35,10 +35,10 @@ namespace HelloWorldReact.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        public ActionResult Timetable()
+        public ActionResult timetable()
         {
-            TIMETABLE_BUS bus = new TIMETABLE_BUS();
-            List<TIMETABLE_OBJ> li = bus.getAll();
+            Timetableoutput bus = new Timetableoutput();
+            List<Timetable> li = bus.getAll();
             return View(li);
         }
         public ActionResult Coursetime()
