@@ -98,79 +98,84 @@ namespace HelloWorldReact.Controllers
             bus.CloseConnection();
             return Json(new { sussess = ret }, JsonRequestBehavior.AllowGet);
         }
-        //[HttpPost]
-        ///// <summary>
-        ///// Cập nhật một bản ghi được gửi lên từ phía client
-        ///// </summary>
-        //public JsonResult update(COURSETIME_OBJ obj, string keysearchCodeView, string keysearchName)
-        //{
-        //    if (ses.func("ADMINDIRE") <= 0)
-        //    {
-        //        return Json(new { sussess = -3 }, JsonRequestBehavior.AllowGet);
+        [HttpPost]
+        /// <summary>
+        /// Cập nhật một bản ghi được gửi lên từ phía client
+        /// </summary>
+        public JsonResult update(COURSETIME_OBJ obj, string keysearchCodeView, string keysearchName)
+        {
+            if (ses.func("ADMINDIRE") <= 0)
+            {
+                return Json(new { sussess = -3 }, JsonRequestBehavior.AllowGet);
 
-        //    }
-        //    COURSETIME_BUS bus = new COURSETIME_BUS();
-        //    int ret = 0;
-        //    int add = 0;
+            }
+            COURSETIME_BUS bus = new COURSETIME_BUS();
+            int ret = 0;
+            int add = 0;
 
-        //    COURSETIME_OBJ obj_temp = null;
-        //    //kiểm tra tồn tại cho trường hợp sửa
-        //    if (!string.IsNullOrEmpty(obj.CODE))//edit
-        //    {
-        //        obj_temp = bus.GetByID(new COURSETIME_OBJ.BusinessObjectID(obj.CODE));
-        //        //if(obj_temp == null || obj_temp.UNIVERSITYCODE!=ses.gUNIVERSITYCODE)
-        //        //{
-        //        //    ret=-4;
-        //        //}
-        //    }
-        //    else
-        //    {
-        //        obj_temp = new COURSETIME_OBJ();
-        //    }
+            COURSETIME_OBJ obj_temp = null;
+            //kiểm tra tồn tại cho trường hợp sửa
+            if (!string.IsNullOrEmpty(obj.CODE))//edit
+            {
+                obj_temp = bus.GetByID(new COURSETIME_OBJ.BusinessObjectID(obj.CODE));
+                //if(obj_temp == null || obj_temp.UNIVERSITYCODE!=ses.gUNIVERSITYCODE)
+                //{
+                //    ret=-4;
+                //}
+            }
+            else
+            {
+                obj_temp = new COURSETIME_OBJ();
+            }
 
-        //    if (ret < 0)
-        //    {
-        //        //đóng kết nối trước khi trả về
-        //        bus.CloseConnection();
-        //        //ban ghi sửa đã bị xóa
-        //        return Json(new { sussess = ret }, JsonRequestBehavior.AllowGet);
+            if (ret < 0)
+            {
+                //đóng kết nối trước khi trả về
+                bus.CloseConnection();
+                //ban ghi sửa đã bị xóa
+                return Json(new { sussess = ret }, JsonRequestBehavior.AllowGet);
 
-        //    }
-        //    //hết kiểm tra tồn tại bản ghi
-        //    //obj_temp.EDITTIME = DateTime.Now;//Thời điểm sủa bản ghi
-        //    //obj_temp.EDITUSER = ses.loginCode;//Người sửa bản ghi
+            }
+            //hết kiểm tra tồn tại bản ghi
+            //obj_temp.EDITTIME = DateTime.Now;//Thời điểm sủa bản ghi
+            //obj_temp.EDITUSER = ses.loginCode;//Người sửa bản ghi
 
-        //    obj_temp.CODEVIEW = obj.CODEVIEW;
-        //    //obj_temp.NAME = obj.NAME;
-        //    //obj_temp.NOTE = obj.NOTE;
-        //    //obj_temp.LOCK = obj.LOCK;
-        //    //Kiểm tra tình trạng sửa hay là thêm mới
-        //    if (string.IsNullOrEmpty(obj.CODE))
-        //    {
-        //        //Thêm mới
-        //        add = 1;
-        //        //Sinh mã
-        //        obj_temp.CODE = bus.genNextCode(obj);
-        //        //obj_temp.LOCK = 0;
-        //        //obj_temp.LOCKDATE = DateTime.Now;
-        //    }
-        //    if (add == 1)
-        //    {
+            obj_temp.CODEVIEW = obj.CODEVIEW;
+            obj_temp.TIMESTART = obj.TIMESTART;
+            obj_temp.TIMEEND = obj.TIMEEND;
+            obj_temp.DAYINWEEK = obj.DAYINWEEK;
+            
+            //obj_temp.CODEVIEW = obj.CODEVIEW;
+            //obj_temp.NAME = obj.NAME;
+            //obj_temp.NOTE = obj.NOTE;
+            //obj_temp.LOCK = obj.LOCK;
+            //Kiểm tra tình trạng sửa hay là thêm mới
+            if (string.IsNullOrEmpty(obj.CODE))
+            {
+                //Thêm mới
+                add = 1;
+                //Sinh mã
+                obj_temp.CODE = bus.genNextCode(obj);
+                //obj_temp.LOCK = 0;
+                //obj_temp.LOCKDATE = DateTime.Now;
+            }
+            if (add == 1)
+            {
 
-        //        ret = bus.Insert(obj_temp);
+                ret = bus.Insert(obj_temp);
 
-        //    }
-        //    else
-        //    {
-        //        //gán _ID để xác định bản ghi sẽ được cập nhật
-        //        obj_temp._ID.CODE = obj.CODE;
-        //        ret = bus.Update(obj_temp);
-        //    }
+            }
+            else
+            {
+                //gán _ID để xác định bản ghi sẽ được cập nhật
+                obj_temp._ID.CODE = obj.CODE;
+                ret = bus.Update(obj_temp);
+            }
 
-        //    bus.CloseConnection();
+            bus.CloseConnection();
 
-        //    //some thing like that
-        //    return Json(new { sussess = ret }, JsonRequestBehavior.AllowGet);
-        //}
+            //some thing like that
+            return Json(new { sussess = ret }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -54,14 +54,18 @@ namespace HelloWorldReact.Controllers
         //    return View(li);
         //}
         //[CustomAuthentication]
-        //public ActionResult Nationreact()
-        //{
-        //    return View();
-        //}
-        //public ActionResult Coursetimereact()
-        //{
-        //    return View();
-        //}
+        public ActionResult Nationreact()
+        {
+            return View();
+        }
+        public ActionResult Coursetimereact()
+        {
+            return View();
+        }
+        public ActionResult Timetablereact()
+        {
+            return View();
+        }
         //[CustomAuthentication]
         //public ActionResult Province()
         //{

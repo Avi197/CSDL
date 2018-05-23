@@ -145,6 +145,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jsx\Coursetime.jsx" />
+    <Content Include="Scripts\jsx\Educationlevel - Copy.jsx" />
     <Content Include="Scripts\jsx\Timetable.jsx" />
     <Content Include="Scripts\jsx\Nation.jsx" />
     <Content Include="Scripts\jsx\Educationlevel.jsx" />
@@ -165,8 +166,9 @@
     <Content Include="Views\Home\coursetimereact.cshtml" />
     <Content Include="Views\Home\coursetime.cshtml" />
     <Content Include="Views\Home\subjects.cshtml" />
-    <Content Include="Views\Home\Course.cshtml" />
-    <None Include="Views\Home\nationreact.cshtml" />
+    <Content Include="Views\Home\smt\Course.cshtml" />
+    <Content Include="Views\Home\timetablereact.cshtml" />
+    <None Include="Views\Home\smt\nationreact.cshtml" />
     <None Include="Views\Home\login.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -221,7 +223,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\nation.cshtml" />
+    <Content Include="Views\Home\smt\nation.cshtml" />
     <Content Include="Views\Home\timetable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
