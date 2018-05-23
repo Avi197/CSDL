@@ -13,7 +13,7 @@ namespace HelloWorldReact.Controllers
     public class CoursetimeController : Controller
     {
         session ses = new session();
-        public JsonResult getlist(string keysearchCodeView, string keysearchName)
+        public JsonResult getlist( string keysearchTimeStart, string keysearchTimeEnd, string keysearchDayInWeek)
         {
             List<COURSETIME_OBJ> li = null;
             //Không trả về dữ liệu khi chưa đăng nhập
@@ -32,19 +32,23 @@ namespace HelloWorldReact.Controllers
             //Khai báo lấy dữ liệu
             COURSETIME_BUS bus = new COURSETIME_BUS();
             List<spParam> lipa = new List<spParam>();
-            //Thêm điều kiện lọc theo codeview nếu có nhập
-            if (keysearchCodeView != "")
+            //if (keysearchTimeStart != "")
+            //{
+            //    lipa.Add(new spParam("CODEVIEW", System.Data.SqlDbType.VarChar, keysearchCodeView, 1));
+            //}
+            if (keysearchTimeStart != "")
             {
-                lipa.Add(new spParam("CODEVIEW", System.Data.SqlDbType.VarChar, keysearchCodeView, 1));//search on codeview
+                lipa.Add(new spParam("TIMESTART", System.Data.SqlDbType.VarChar, keysearchTimeStart, 1));
             }
-            //Thêm phần điều kiện lọc theo tên nếu có nhập
-            if (keysearchName != "")
+            if (keysearchTimeEnd != "")
             {
-                lipa.Add(new spParam("NAME", System.Data.SqlDbType.NVarChar, keysearchName, 1));//search on codeview
+                lipa.Add(new spParam("TIMEEND", System.Data.SqlDbType.VarChar, keysearchTimeEnd, 1));
             }
-            //Lọc đơn vị cấp trên; '' sẽ là không co đơn vị cấp trên
-            //lipa.Add(new fieldpara("UNIVERSITYCODE", ses.gUNIVERSITYCODE, 0));
-            //lipa.Add(new fieldpara("LANGUAGECODE", ses.getLang(), 0));
+            if (keysearchDayInWeek != "")
+            {
+                lipa.Add(new spParam("DAYINWEEK", System.Data.SqlDbType.VarChar, keysearchDayInWeek, 1));
+            }
+
             int countpage = 0;
             //order by theorder, with pagesize and the page
             li = bus.getAll(lipa.ToArray());
@@ -165,12 +169,12 @@ namespace HelloWorldReact.Controllers
                 ret = bus.Insert(obj_temp);
 
             }
-            else
-            {
-                //gán _ID để xác định bản ghi sẽ được cập nhật
-                obj_temp._ID.CODE = obj.CODE;
-                ret = bus.Update(obj_temp);
-            }
+            //else
+            //{
+            //    //gán _ID để xác định bản ghi sẽ được cập nhật
+            //    obj_temp._ID.CODE = obj.CODE;
+            //    ret = bus.Update(obj_temp);
+            //}
 
             bus.CloseConnection();
 

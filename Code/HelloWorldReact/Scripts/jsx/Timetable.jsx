@@ -30,8 +30,8 @@ var App = React.createClass({
             url: '/timetable/getlist',
             dataType: 'json',
             data: {
-                keysearchCodeView: $.trim($('#keysearch-CodeView').val()),
-                keysearchName: $.trim($('#keysearch-Name').val()),
+                searchSemester: $.trim($('#search-Semester').val()),
+
                 //                page: homeConfig.pageIndex,
                 pageSize: 0//default from server
             },
@@ -57,8 +57,7 @@ var App = React.createClass({
 
     eventClick: function () {
         //jquery set lai value
-        $("#keysearch-Name").val("");
-        $("#keysearch-CodeView").val("");
+        $("#search-Semester").val("");
         if ($('#div-search').css('display') == 'none') {
             $("#div-search").css("display", "block");
         } else {
@@ -82,14 +81,15 @@ var App = React.createClass({
             console.log("Có giá trị");
             //set gia tri cho cac thanh phan giao dien
             $("#monhoc").val(obj.monhoc);
-            $("#").val(obj.TIMESTART);
-            $("#TIMEEND").val(obj.TIMEEND);
-            $("#DAYINWEEK").val(obj.DAYINWEEK);
-            //$("#NAME").val(obj.NAME);
-            $("#CODEVIEW").val(obj.CODEVIEW);
-            //$("#NOTE").val(obj.NOTE);
+            $("#stc").val(obj.stc);
+            $("#lopmonhoc").val(obj.lopmonhoc);
+            $("#tengiangvien").val(obj.tengiangvien);
+            $("#thu").val(obj.thu);
+            $("#tiet").val(obj.tiet);
+            $("#giangduong").val(obj.giangduong);
+            $("#sosv").val(obj.sosv);
+            $("#sosvdk").val(obj.sosvdk);
 
-            //$("#LOCK").prop('checked', (obj.LOCK == 1));
         }
         $("#UpdateModal").modal("show");
 
@@ -97,15 +97,15 @@ var App = React.createClass({
     },
     clearInput: function () {
         console.log("Clear me");
-        $("#CODE").val('');
-        $("#CODE").val(obj.CODE);
-        $("#TIMESTART").val(obj.TIMESTART);
-        $("#TIMEEND").val(obj.TIMEEND);
-        $("#DAYINWEEK").val(obj.DAYINWEEK);
-        //$("#NAME").val('');
-        $("#CODEVIEW").val('');
-        //$("#NOTE").val('');
-        //$("#LOCK").prop('checked', false);
+        $("#monhoc").val(obj.monhoc);
+        $("#stc").val(obj.stc);
+        $("#lopmonhoc").val(obj.lopmonhoc);
+        $("#tengiangvien").val(obj.tengiangvien);
+        $("#thu").val(obj.thu);
+        $("#tiet").val(obj.tiet);
+        $("#giangduong").val(obj.giangduong);
+        $("#sosv").val(obj.sosv);
+        $("#sosvdk").val(obj.sosvdk);
 
     },
     //phuong thuc quan trong nhat-->render html la ngoai
@@ -136,19 +136,13 @@ var App = React.createClass({
                         <div className="col-lg-3 col-md-6">
                             <label className="col-md-2 control-label">Mã</label>
                             <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-CodeView" />
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
-                            <label className="col-md-2 control-label">tiet bat dau</label>
-                            <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-Name" />
+                                <input type="text" className="form-control" id="search-Semester" />
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6">tim
                             <label className="col-md-2 control-label">tiet ket thuc</label>
                             <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-CodeView" />
+                                <input type="text" className="form-control" id="search-Semester" />
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6">
@@ -229,10 +223,15 @@ var ListRow = React.createClass({
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Mã</th>
-                            <th>Tiet bat dau</th>
-                            <th>Tiet ket thuc</th>
-                            <th>Thu</th>
+                            <th>monhoc</th>
+                            <th>stc</th>
+                            <th>lopmonhoc</th>
+                            <th>tengiangvien</th>
+                            <th>thu</th>
+                            <th>tiet</th>
+                            <th>giangduong</th>
+                            <th>sosv</th>
+                            <th>sosvdk</th>
                         </tr>
                     </thead>
                     <tbody>{listRow}</tbody>
@@ -290,8 +289,13 @@ var RowDetail = React.createClass({
                 <td>{this.props.index}</td>
                 <td>{this.props.item.monhoc}</td>
                 <td>{this.props.item.stc}</td>
-                <td>{this.props.item.TIMEEND}</td>
-                <td>{this.props.item.DAYINWEEK}</td>
+                <td>{this.props.item.lopmonhoc}</td>
+                <td>{this.props.item.tengiangvien}</td>
+                <td>{this.props.item.thu}</td>
+                <td>{this.props.item.tiet}</td>
+                <td>{this.props.item.giangduong}</td>
+                <td>{this.props.item.sosv}</td>
+                <td>{this.props.item.sosvdk}</td>
                 <td>
 
 
@@ -349,7 +353,7 @@ var NewRow = React.createClass({
             NOTE: NOTE,
             LOCK: LOCK ? 1 : 0,
             thetype: $.trim($('#thetype').val()),
-            keysearchCodeView: $.trim($('#keysearch-CodeView').val()),
+            keysearchCodeView: $.trim($('#search-Semester').val()),
             keysearchName: $.trim($('#keysearch-Name').val()),
         }
         if (CODEVIEW == "") {

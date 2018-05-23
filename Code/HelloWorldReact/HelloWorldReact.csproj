@@ -124,14 +124,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CoursetimeController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Controllers\TestTimetableController.cs" />
-    <Compile Include="Controllers\TIMETABLEController.cs" />
     <Compile Include="Controllers\smt\BranchController.cs" />
     <Compile Include="Controllers\smt\ProvinceController.cs" />
     <Compile Include="Controllers\smt\NationController.cs" />
+    <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="IS.authen.cs" />
     <Compile Include="IS.Base.cs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -170,7 +167,9 @@
     <Content Include="Views\Home\timetablereact.cshtml" />
     <None Include="Views\Home\smt\nationreact.cshtml" />
     <None Include="Views\Home\login.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ReactConfig.cs" />
@@ -224,6 +223,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\smt\nation.cshtml" />
+    <Content Include="Views\Home\timetable - semester 1.cshtml" />
+    <Content Include="Views\Home\timetable - semester 2.cshtml" />
     <Content Include="Views\Home\timetable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -237,8 +238,6 @@
     <Folder Include="lte\" />
     <Folder Include="plugins\" />
     <Folder Include="Views\Course\" />
-    <Folder Include="Views\TestTimetable\" />
-    <Folder Include="Views\Test\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -30,9 +30,11 @@ var App = React.createClass({
             url: '/coursetime/getlist',
             dataType: 'json',
             data: {
-                keysearchCodeView: $.trim($('#keysearch-CodeView').val()),
-                keysearchName: $.trim($('#keysearch-Name').val()),
-                //                page: homeConfig.pageIndex,
+                //keysearchCodeView: $.trim($('#keysearch-CodeView').val()),
+                keysearchTimeStart: $.trim($('#keysearch-TimeStart').val()),
+                keysearchTimeEnd: $.trim($('#keysearch-TimeEnd').val()),
+                keysearchDayinWeek: $.trim($('#keysearch-DayInWeek').val()),
+
                 pageSize: 0//default from server
             },
             success: function (data) {
@@ -55,10 +57,17 @@ var App = React.createClass({
     },
 
 
+
+    //&nbsp is a fucking space
+
+
+
+
     eventClick: function () {
         //jquery set lai value
-        $("#keysearch-Name").val("");
-        $("#keysearch-CodeView").val("");
+        $("#keysearch-TimeStart").val("");
+        $("#keysearch-TimeEnd").val("");
+        $("#keysearch-DayInWeek").val("");
         if ($('#div-search').css('display') == 'none') {
             $("#div-search").css("display", "block");
         } else {
@@ -85,11 +94,7 @@ var App = React.createClass({
             $("#TIMESTART").val(obj.TIMESTART);
             $("#TIMEEND").val(obj.TIMEEND);
             $("#DAYINWEEK").val(obj.DAYINWEEK);
-            //$("#NAME").val(obj.NAME);
             $("#CODEVIEW").val(obj.CODEVIEW);
-            //$("#NOTE").val(obj.NOTE);
-
-            //$("#LOCK").prop('checked', (obj.LOCK == 1));
         }
         $("#UpdateModal").modal("show");
 
@@ -98,21 +103,15 @@ var App = React.createClass({
     clearInput: function () {
         console.log("Clear me");
         $("#CODE").val('');
-        $("#CODE").val(obj.CODE);
-        $("#TIMESTART").val(obj.TIMESTART);
-        $("#TIMEEND").val(obj.TIMEEND);
-        $("#DAYINWEEK").val(obj.DAYINWEEK);
-        //$("#NAME").val('');
+        $("#TIMESTART").val('');
+        $("#TIMEEND").val('');
+        $("#DAYINWEEK").val('');
         $("#CODEVIEW").val('');
-        //$("#NOTE").val('');
-        //$("#LOCK").prop('checked', false);
 
     },
-    //phuong thuc quan trong nhat-->render html la ngoai
 
 
-
-    //update???
+    //Main and 2 smol button up top
     render: function () {
         console.log("Ren the main");
         return (
@@ -133,28 +132,22 @@ var App = React.createClass({
                         </div>
                     </div>
                     <div className="col-lg-12 col-md-12" id="div-search" style={{ 'margin-bottom': '10px', 'display': 'none' }}>
-                        <div className="col-lg-3 col-md-6">
-                            <label className="col-md-2 control-label">Mã</label>
-                            <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-CodeView" />
-                            </div>
-                        </div>
                         <div className="col-lg-4 col-md-6">
                             <label className="col-md-2 control-label">tiet bat dau</label>
                             <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-Name" />
+                                <input type="text" className="form-control" id="keysearch-TimeStart" />
                             </div>
                         </div>
-                        <div className="col-lg-3 col-md-6">tim
+                        <div className="col-lg-4 col-md-6">
                             <label className="col-md-2 control-label">tiet ket thuc</label>
                             <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-CodeView" />
+                                <input type="text" className="form-control" id="keysearch-TimeEnd" />
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6">
                             <label className="col-md-2 control-label">thu</label>
                             <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-dayinweek" />
+                                <input type="text" className="form-control" id="keysearch-DayInWeek" />
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-12">
@@ -170,6 +163,7 @@ var App = React.createClass({
             </div>
         );
     }
+    //end main
 });
 
 
@@ -297,7 +291,7 @@ var RowDetail = React.createClass({
 
 
 
-                    <input type="button" className="btn btn-sm btn-primary" value="Sửa" onClick={() => this.props.setEdit("Sửa bản ghi", this.props.item)} />
+
                     &nbsp; &nbsp;
                       <input type="button" className="btn btn-sm btn-danger" value="Xóa" onClick={this.handleRemove} />
 
@@ -344,151 +338,150 @@ var NewRow = React.createClass({
 
         var data = {
             CODE: CODE,
-            CODEVIEW: CODEVIEW,
-            NAME: NAME,
-            NOTE: NOTE,
-            LOCK: LOCK ? 1 : 0,
-            thetype: $.trim($('#thetype').val()),
-            keysearchCodeView: $.trim($('#keysearch-CodeView').val()),
-            keysearchName: $.trim($('#keysearch-Name').val()),
+            CODEVIEW: CODEVIEW,),
         }
-        if (CODEVIEW == "") {
-            alert("Chưa nhập mã");
-            $("#UpdateModal").modal("show");
+if (CODEVIEW == "") {
+    alert("Chưa nhập mã");
+    $("#UpdateModal").modal("show");
 
 
 
 
 
-            return false;
+    return false;
+    NAME: NAME,
+        NOTE: NOTE,
+            LOCK: LOCK ? 1 : 0,
+                thetype: $.trim($('#thetype').val()),
+                    keysearchCodeView: $.trim($('#keysearch-CodeView').val()),
+                        keysearchName: $.trim($('#keysearch-Name').val()
         } else {
 
 
-            //Add or edit 1 department
-            $.ajax({
-                url: "/coursetime/update",
-                type: 'POST',
-                data: data,
-                dataType: 'json',
-                success: function (data) {
-                    if (data.sussess >= 0) {
-                        this.props.onRowSubmit(); //load lai du lieu
+    //Add or edit 1 department
+    $.ajax({
+        url: "/coursetime/update",
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        success: function (data) {
+            if (data.sussess >= 0) {
+                this.props.onRowSubmit(); //load lai du lieu
 
-                    }
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
-                }.bind(this)
-            });
-
-            //jquery set lai value
-            if ($.trim(CODE) == "") {
-
-                $("#titleOption").text("Thêm mới đơn vị");
             }
-            $("#UpdateModal").modal("hide");
+        }.bind(this),
+        error: function (xhr, status, err) {
+            console.error(this.props.url, status, err.toString());
+        }.bind(this)
+    });
 
-            return false;
-        }
+    //jquery set lai value
+    if ($.trim(CODE) == "") {
+
+        $("#titleOption").text("Thêm mới đơn vị");
+    }
+    $("#UpdateModal").modal("hide");
+
+    return false;
+}
     },
 
-    changeEvent: function (e) {
-        var data = new FormData();
-        var files = e.target.files;
-        console.log("Get file");
-        for (var x = 0; x < files.length; x++) {
-            data.append("file" + x, files[x]);
-            console.log('Have file');
-        }
-        $.ajax({
-            url: "/coursetime/post",
-            type: "POST",
-            data: data,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                console.log(data.sussess);
-                if (data.sussess >= 0) {
-                    console.log(data.filename);
+changeEvent: function (e) {
+    var data = new FormData();
+    var files = e.target.files;
+    console.log("Get file");
+    for (var x = 0; x < files.length; x++) {
+        data.append("file" + x, files[x]);
+        console.log('Have file');
+    }
+    $.ajax({
+        url: "/coursetime/post",
+        type: "POST",
+        data: data,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            console.log(data.sussess);
+            if (data.sussess >= 0) {
+                console.log(data.filename);
 
-                }
-            }.bind(this)
-        }).done(function () {
-            console.log("xong roi");
+            }
+        }.bind(this)
+    }).done(function () {
+        console.log("xong roi");
 
-        });
-
-
-    },
+    });
 
 
-    //update
-    render: function () {
-        console.log("Ren new row here");
+},
 
-        console.log("Option is ok");
 
-        var inputStyle = { padding: '10px' };
-        return (
+render: function () {
+    console.log("Ren new row here");
 
-            <div className="modal fade" id="UpdateModal" role="dialog" data-backdrop="static" data-keyboard="false">
-                <div className="modal-dialog">
-                    <div className="modal-content ">
-                        <div className="modal-header" style={{ 'border-bottom': 'solid 2px #ccc' }}>
-                            <button type="button" className="close" data-dismiss="modal"></button>
-                            <h4 className="box-title" id="titleOption">Thêm bản ghi mới</h4>
-                        </div>
-                        <div className="modal-body modalScroll">
-                            <input type="text" className="form-control col-md-8 hidden" ref="CODE" id="CODE" />
-                            <form className="form-horizontal">
-                                <div className="box-body">
-                                    <div className="form-group col-sm-12">
-                                        <label className="col-sm-4 control-label">Mã</label>
-                                        <div className="col-sm-4 col-md-4">
-                                            <input type="text" className="form-control" ref="CODEVIEW" id="CODEVIEW" />
-                                        </div>
+    console.log("Option is ok");
+
+    var inputStyle = { padding: '10px' };
+    return (
+
+        <div className="modal fade" id="UpdateModal" role="dialog" data-backdrop="static" data-keyboard="false">
+            <div className="modal-dialog">
+                <div className="modal-content ">
+                    <div className="modal-header" style={{ 'border-bottom': 'solid 2px #ccc' }}>
+                        <button type="button" className="close" data-dismiss="modal"></button>
+                        <h4 className="box-title" id="titleOption">Thêm bản ghi mới</h4>
+                    </div>
+                    <div className="modal-body modalScroll">
+                        <input type="text" className="form-control col-md-8 hidden" ref="CODE" id="CODE" />
+                        <form className="form-horizontal">
+                            <div className="box-body">
+                                <div className="form-group col-sm-12">
+                                    <label className="col-sm-4 control-label">Mã</label>
+                                    <div className="col-sm-4 col-md-4">
+                                        <input type="text" className="form-control" ref="CODEVIEW" id="CODEVIEW" />
                                     </div>
-                                    <div className="form-group col-sm-12">
-                                        <label className="col-sm-4 control-label">Tên</label>
-                                        <div className="col-sm-8">
-                                            <input type="text" className="form-control" ref="NAME" id="NAME" />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group col-sm-12">
-                                        <label className="col-sm-4 control-label">Không sử dụng</label>
-                                        <div className="col-sm-8">
-                                            <input type="checkbox" ref="LOCK" id="LOCK" />
-                                        </div>
-                                    </div>
-
-
-                                    <div className="form-group col-sm-12">
-                                        <label className="col-sm-4 control-label">Note</label>
-                                        <div className="col-sm-8">
-                                            <textarea ref="NOTE" id="NOTE" name="NOTE" rows="10" className="col-sm-12" ></textarea>
-                                        </div>
-                                    </div>
-
-
                                 </div>
-                            </form>
+                                <div className="form-group col-sm-12">
+                                    <label className="col-sm-4 control-label">Tên</label>
+                                    <div className="col-sm-8">
+                                        <input type="text" className="form-control" ref="NAME" id="NAME" />
+                                    </div>
+                                </div>
 
-                        </div>
-                        <div className="modal-footer" style={{ 'border-top': 'solid 2px #ccc' }}>
-                            <button className="btn btn-primary" id="cmdSave" onClick={this.handleSubmit}> Lưu </button>
-                            &nbsp;
+                                <div className="form-group col-sm-12">
+                                    <label className="col-sm-4 control-label">Không sử dụng</label>
+                                    <div className="col-sm-8">
+                                        <input type="checkbox" ref="LOCK" id="LOCK" />
+                                    </div>
+                                </div>
+
+
+                                <div className="form-group col-sm-12">
+                                    <label className="col-sm-4 control-label">Note</label>
+                                    <div className="col-sm-8">
+                                        <textarea ref="NOTE" id="NOTE" name="NOTE" rows="10" className="col-sm-12" ></textarea>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </form>
+
+                    </div>
+                    <div className="modal-footer" style={{ 'border-top': 'solid 2px #ccc' }}>
+                        <button className="btn btn-primary" id="cmdSave" onClick={this.handleSubmit}> Lưu </button>
+                        &nbsp;
                         <button className="btn btn-danger" id="cmdCancel" data-dismiss="modal">
-                                Hủy
+                            Hủy
                         </button>
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
-        );
-    }
+    );
+}
 });
 
 //Render html vao the co Id = "container"
