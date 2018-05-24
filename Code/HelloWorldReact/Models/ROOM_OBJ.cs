@@ -97,59 +97,10 @@ namespace IS.uni
             set;
         }
 
-        //[Display(Name="Tên")]
-        //public virtual System.String NAME
+        //public override int GetHashCode()
         //{
-        //    get ;
-        //    set ;
+        //    return _ID.GetHashCode();
         //}
-        //[Display(Name="Ghi chú")]
-        //public virtual System.String NOTE
-        //{
-        //    get ;
-        //    set ;
-        //}
-        //public virtual System.String EDITUSER
-        //{
-        //    get ;
-        //    set ;
-        //}
-        //public virtual System.DateTime EDITTIME
-        //{
-        //    get ;
-        //    set ;
-        //}
-        //public virtual System.Int16 LOCK
-        //{
-        //    get ;
-        //    set ;
-        //}
-        //public virtual System.DateTime LOCKDATE
-        //{
-        //    get ;
-        //    set ;
-        //}
-        //public virtual System.String WHOIS
-        //{
-        //    get ;
-        //    set ;
-        //}
-        //public virtual System.DateTime BEGINDATE
-        //{
-        //    get ;
-        //    set ;
-        //}
-        //public virtual System.DateTime ENDDATE
-        //{
-        //    get ;
-        //    set ;
-        //}
-
-
-        public override int GetHashCode()
-        {
-            return _ID.GetHashCode();
-        }
 
     }
 }

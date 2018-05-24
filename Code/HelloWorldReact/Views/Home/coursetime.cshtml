@@ -21,11 +21,11 @@
                             <tr>
                             <tr>
                                 <th>STT</th>
-                                <th>Mã</th>
+                                <th>Code</th>
                                 <th>Codeview</th>
-                                <th>Thứ</th>
                                 <th>Tiết bắt đầu</th>
                                 <th>Tiết kết thúc</th>
+                                <th>Thứ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,9 +40,9 @@
                                     <td>@i</td>
                                     <td>@it.CODE</td>
                                     <td>@it.CODEVIEW</td>
-                                    <td>@it.DAYINWEEK</td>
                                     <td>@it.TIMESTART</td>
                                     <td>@it.TIMEEND</td>
+                                    <td>@it.DAYINWEEK</td>
                                     <td>
                                         <input type="button" className="btn btn-sm btn-primary" value="Sửa" onClick="return handleEdit(@it.CODE);" />
                                         &nbsp; &nbsp;
@@ -52,15 +52,10 @@
                             }
                         </tbody>
                         <tfoot>
-                            <tr>
-                                @*<th>STT</th>
-                                    <th>Mã</th>
-                                    <th>Tên</th>
-                                    <th>Ghi chú</th>
-                                    <th>Chức năng</th>*@
-                            </tr>
+                            <tr></tr>
                         </tfoot>
                     </table>
+
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -80,7 +75,6 @@
                 if (data.sussess >= 0) {
                     location.reload();
                 } else {
-                    //try to waiting
                     alert('lỗi xóa bản ghi');
                 }
             }.bind(this),

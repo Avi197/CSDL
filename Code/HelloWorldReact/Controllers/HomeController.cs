@@ -7,7 +7,6 @@ using IS.uni;
 using IS.Base;
 using IS.authen;
 using IS.Sess;
-using HelloWorldReact.Model;
 
 namespace HelloWorldReact.Controllers
 {
@@ -54,7 +53,7 @@ namespace HelloWorldReact.Controllers
         //    return View(li);
         //}
         //[CustomAuthentication]
-        public ActionResult Nationreact()
+        public ActionResult ttbTeacher()
         {
             return View();
         }
@@ -63,6 +62,10 @@ namespace HelloWorldReact.Controllers
             return View();
         }
         public ActionResult Timetablereact()
+        {
+            return View();
+        }
+        public ActionResult Roomreact()
         {
             return View();
         }

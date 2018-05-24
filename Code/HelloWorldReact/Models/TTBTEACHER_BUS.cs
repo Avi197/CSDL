@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,28 +9,17 @@ using IS.Config;
 using System.Configuration;
 namespace IS.uni
 {
-    public class TIMETABLE_BUS
+    public class TTBTEACHER_BUS
     {
         DBBase db = new DBBase(ConfigurationSettings.AppSettings["connectionString"].ToString());
-        public TIMETABLE_BUS()
+        public TTBTEACHER_BUS()
         {
         }
-        public List<TIMETABLE_OBJ> getAll()
+        public List<TTBTEACHER_OBJ> getAll(params spParam[] listFilter)
         {
-            List<TIMETABLE_OBJ> lidata = new List<TIMETABLE_OBJ>();
-            string sql = "exec inthoikhoabieu @semester";
-            int time = 0;
+            string sql = "exec tkbgiaovien @name";
             SqlCommand cm = new SqlCommand();
-            DateTime today = DateTime.Today;
-            int todayMonth = today.Month;
-            DateTime setdate = new DateTime(2000, 8, 8);
-            int setdateMonth = setdate.Month;
-            if (todayMonth < setdateMonth)
-            {
-                time = 1;
-            }
-            else time = 2;
-            sql += "=" + time;
+            List<TTBTEACHER_OBJ> lidata = new List<TTBTEACHER_OBJ>();
             cm.CommandText = sql;
             cm.CommandType = CommandType.Text;
             DataSet ds = new DataSet();
@@ -43,12 +32,12 @@ namespace IS.uni
             {
                 foreach (DataRow dr in ds.Tables["Tmp"].Rows)
                 {
-                    TIMETABLE_OBJ obj = new TIMETABLE_OBJ();
+                    TTBTEACHER_OBJ obj = new TTBTEACHER_OBJ();
 
-                    Type myTableObject = typeof(TIMETABLE_OBJ);
+                    Type myTableObject = typeof(TTBTEACHER_OBJ);
                     System.Reflection.PropertyInfo[] selectFieldInfo = myTableObject.GetProperties();
 
-                    
+
                     //set object value
                     foreach (System.Reflection.PropertyInfo info in selectFieldInfo)
                     {
@@ -62,7 +51,7 @@ namespace IS.uni
                                 }
                             }
                         }
-                        
+
                     }
                     lidata.Add(obj);
                 }

@@ -8,27 +8,27 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Thoi khoa bieu toan truong</h3>
+                    <h3 class="box-title">Thoi khoa bieu giao vien</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    @*<button className="btn btn-sm  btn-primary" id="btnAdd" onClick="return handleNew();">
-                        Thêm mới
-                    </button>*@
+                    @using (Html.BeginForm())
+                    {
+                        <p>
+                            Title: @Html.TextBox("Search") <br />
+                            <input type="submit" value="Filter" />
+                        </p>
+                    }
 
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>STT</th>
-                                <th>Môn học</th>
-                                <th>STC</th>
-                                <th>Lớp môn học</th>
                                 <th>Tên giảng viên</th>
+                                <th>Môn học</th>
+                                <th>Lớp môn học</th>
                                 <th>Tiết</th>
                                 <th>Thứ</th>
                                 <th>Giảng đường</th>
-                                <th>Số SV</th>
-                                <th>Số SVDK</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,15 +40,13 @@
                                 i++;
                                 <tr>
                                     <td>@i</td>
-                                    <td>@item.monhoc</td>
-                                    <td>@item.stc</td>
-                                    <td>@item.lopmonhoc</td>
                                     <td>@item.tengiangvien</td>
+                                    <td>@item.monhoc</td>
+                                    <td>@item.lopmonhoc</td>
                                     <td>@item.tiet</td>
                                     <td>@item.thu</td>
                                     <td>@item.giangduong</td>
-                                    <td>@item.sosv</td>
-                                    <td>@item.sosvdk</td>
+
                                 </tr>
                             }
                         </tbody>

@@ -122,70 +122,50 @@ namespace IS.uni
             }
             return li[0];
         }
-        public string genNextCode(ROOM_OBJ obj)
+        //public string genNextCode(ROOM_OBJ obj)
+        //{
+        //    //Phải viết lại theo mô hình nào đó
+        //    Random rnd = new Random();
+        //    int i = rnd.Next(int.MaxValue);
+        //    return (i % 10000000000).ToString();
+        //}
+        public int Insert(ROOM_OBJ obj)
         {
-            //Phải viết lại theo mô hình nào đó
-            Random rnd = new Random();
-            int i = rnd.Next(int.MaxValue);
-            return (i % 10000000000).ToString();
+            int ret = 0;
+            DBBase db = new DBBase(ConfigurationSettings.AppSettings["connectionString"].ToString());
+            string sql = "INSERT INTO ROOM(code, numberfloor,codeview,buildingcode) VALUES(@code,@numberfloor,@codeview,@buildingcode)";
+            SqlCommand com = new SqlCommand();
+            com.CommandText = sql;
+            com.CommandType = CommandType.Text;
+            com.Parameters.Add("@code", SqlDbType.VarChar).Value = obj.CODE;
+            com.Parameters.Add("@numberfloor", SqlDbType.VarChar).Value = obj.NUMBERFLOOR;
+            com.Parameters.Add("@codeview", SqlDbType.VarChar).Value = obj.CODEVIEW;
+            com.Parameters.Add("@buildingcode", SqlDbType.VarChar).Value = obj.BUILDINGCODE;
+            ret = db.doCommand(ref com);
+            return ret;
         }
-        //public int Insert(ROOM_OBJ obj)
-        //{
-        //    int ret = 0;
-        //    DBBase db = new DBBase(ConfigurationSettings.AppSettings["connectionString"].ToString());
-        //    string sql = "INSERT INTO ROOM(code,codeview, name, note, edituser,edittime,lock, lockdate) VALUES(@code,@codeview, @name, @note, @edituser,@edittime,@lock, @lockdate)";
-        //    SqlCommand com = new SqlCommand();
-        //    com.CommandText = sql;
-        //    com.CommandType = CommandType.Text;
-        //    com.Parameters.Add("@code", SqlDbType.VarChar).Value = obj.CODE ;
-        //    com.Parameters.Add("@timestart", SqlDbType.VarChar).Value = obj.TIMESTART;
-        //    com.Parameters.Add("@timeend", SqlDbType.VarChar).Value = obj.TIMEEND;
-        //    com.Parameters.Add("@dayinweek", SqlDbType.VarChar).Value = obj.DAYINWEEK;
-        //    com.Parameters.Add("@codeview", SqlDbType.VarChar).Value = obj.CODEVIEW;
-        //    //com.Parameters.Add("@name", SqlDbType.NVarChar).Value = obj.NAME;
-        //    //com.Parameters.Add("@note", SqlDbType.NVarChar).Value = obj.NOTE;
-        //    //com.Parameters.Add("@edituser", SqlDbType.VarChar).Value = obj.EDITUSER;
-        //    //com.Parameters.Add("@edittime", SqlDbType.DateTime).Value = obj.EDITTIME;
-        //    //com.Parameters.Add("@lock", SqlDbType.Int).Value = obj.LOCK;
-        //    //com.Parameters.Add("@lockdate", SqlDbType.DateTime).Value = obj.LOCKDATE;
-        //    ret = db.doCommand(ref com);
-        //    return ret;
-        //}
-        //public int Update(ROOM_OBJ obj)
-        //{
-        //    int ret = 0;
-        //    DBBase db = new DBBase(ConfigurationSettings.AppSettings["connectionString"].ToString());
-        //    string sql = @"UPDATE ROOM SET 
-        //            code=@code
-        //            ,codeview=@codeview
-        //            , name=@name
-        //            , note=@note
-        //            , edituser=@edituser
-        //            ,edittime=@edittime
-        //            ,lock=@lock
-        //            , lockdate=@lockdate
-        //            WHERE code=@code_key
-        //        ";
-        //    SqlCommand com = new SqlCommand();
-        //    com.CommandText = sql;
-        //    com.CommandType = CommandType.Text;
-        //    com.Parameters.Add("@code", SqlDbType.VarChar).Value = obj.CODE;
-        //    com.Parameters.Add("@code", SqlDbType.VarChar).Value = obj.CODE;
-        //    com.Parameters.Add("@timestart", SqlDbType.VarChar).Value = obj.TIMESTART;
-        //    com.Parameters.Add("@timeend", SqlDbType.VarChar).Value = obj.TIMEEND;
-        //    com.Parameters.Add("@dayinweek", SqlDbType.VarChar).Value = obj.DAYINWEEK;
-        //    com.Parameters.Add("@codeview", SqlDbType.VarChar).Value = obj.CODEVIEW;
-        //    com.Parameters.Add("@codeview", SqlDbType.VarChar).Value = obj.CODEVIEW;
-        //    //com.Parameters.Add("@name", SqlDbType.NVarChar).Value = obj.NAME;
-        //    //com.Parameters.Add("@note", SqlDbType.NVarChar).Value = obj.NOTE;
-        //    //com.Parameters.Add("@edituser", SqlDbType.VarChar).Value = obj.EDITUSER;
-        //    //com.Parameters.Add("@edittime", SqlDbType.DateTime).Value = obj.EDITTIME;
-        //    //com.Parameters.Add("@lock", SqlDbType.Int).Value = obj.LOCK;
-        //    //com.Parameters.Add("@lockdate", SqlDbType.DateTime).Value = obj.LOCKDATE;
-        //    com.Parameters.Add("@code_key", SqlDbType.VarChar).Value = obj._ID.CODE;
-        //    ret = db.doCommand(ref com);
-        //    return ret;
-        //}
+        public int Update(ROOM_OBJ obj)
+        {
+            int ret = 0;
+            DBBase db = new DBBase(ConfigurationSettings.AppSettings["connectionString"].ToString());
+            string sql = @"UPDATE ROOM SET 
+                    code=@code
+                    ,numberfloor=@numberflorr
+                    ,codeview=@codeview
+                    ,buildingcode=@buildingcode
+                    WHERE code=@code_key
+                ";
+            SqlCommand com = new SqlCommand();
+            com.CommandText = sql;
+            com.CommandType = CommandType.Text;
+            com.Parameters.Add("@code", SqlDbType.VarChar).Value = obj.CODE;
+            com.Parameters.Add("@numberfloor", SqlDbType.VarChar).Value = obj.NUMBERFLOOR;
+            com.Parameters.Add("@codeview", SqlDbType.VarChar).Value = obj.CODEVIEW;
+            com.Parameters.Add("@buildingcode", SqlDbType.VarChar).Value = obj.BUILDINGCODE;
+            com.Parameters.Add("@code_key", SqlDbType.VarChar).Value = obj._ID.CODE;
+            ret = db.doCommand(ref com);
+            return ret;
+        }
         public int Delete(ROOM_OBJ.BusinessObjectID obj)
         {
             int ret = 0;

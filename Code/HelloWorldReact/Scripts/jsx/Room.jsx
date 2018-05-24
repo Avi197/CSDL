@@ -27,13 +27,12 @@ var App = React.createClass({
     loadDataW: function () {
 
         $.ajax({
-            url: '/coursetime/getlist',
+            url: '/room/getlist',
             dataType: 'json',
             data: {
-                keysearchTimeStart: $.trim($('#keysearch-TimeStart').val()),
-                keysearchTimeEnd: $.trim($('#keysearch-TimeEnd').val()),
-                keysearchDayinWeek: $.trim($('#keysearch-DayInWeek').val()),
-
+                keysearchCodeView: $.trim($('#keysearch-CodeView').val()),
+                keysearchName: $.trim($('#keysearch-Name').val()),
+                //                page: homeConfig.pageIndex,
                 pageSize: 0//default from server
             },
             success: function (data) {
@@ -44,7 +43,7 @@ var App = React.createClass({
                     alert("Lỗi không lấy được dữ liệu");
                 }
                 //                AppRendered.loadData();
-                //pagination(data.total, function () {
+                //pagiroom(data.total, function () {
                 //    AppRendered.loadData();
 
                 //});
@@ -58,9 +57,8 @@ var App = React.createClass({
 
     eventClick: function () {
         //jquery set lai value
-        $("#keysearch-TimeStart").val("");
-        $("#keysearch-TimeEnd").val("");
-        $("#keysearch-DayInWeek").val("");
+        $("#keysearch-Name").val("");
+        $("#keysearch-CodeView").val("");
         if ($('#div-search').css('display') == 'none') {
             $("#div-search").css("display", "block");
         } else {
@@ -84,10 +82,9 @@ var App = React.createClass({
             console.log("Có giá trị");
             //set gia tri cho cac thanh phan giao dien
             $("#CODE").val(obj.CODE);
-            $("#TIMESTART").val(obj.TIMESTART);
-            $("#TIMEEND").val(obj.TIMEEND);
-            $("#DAYINWEEK").val(obj.DAYINWEEK);
+            $("#NUMBERFLOOR").val(obj.NUMBERFLOOR);
             $("#CODEVIEW").val(obj.CODEVIEW);
+            $("#BUILDINGCODE").val(obj.BUILDINGCODE);
         }
         $("#UpdateModal").modal("show");
 
@@ -96,18 +93,17 @@ var App = React.createClass({
     clearInput: function () {
         console.log("Clear me");
         $("#CODE").val('');
-        $("#TIMESTART").val('');
-        $("#TIMEEND").val('');
-        $("#DAYINWEEK").val('');
+        $("#NUMBERFLOOR").val('');
         $("#CODEVIEW").val('');
+        $("#BUILDINGCODE").val('');
+
     },
     //phuong thuc quan trong nhat-->render html la ngoai
-
-
     render: function () {
         console.log("Ren the main");
         return (
             <div>
+
                 <NewRow onRowSubmit={this.handleNewRowSubmit} />
 
                 <div id="listData">
@@ -118,28 +114,16 @@ var App = React.createClass({
                             <button className="btn btn-sm  btn-primary" id="btnAdd" onClick={() => this.setEdit("Thông báo")}>
                                 Thêm mới
                                 </button>
-                            &nbsp;
+                            &nbsp; &nbsp;
                                 <input type="button" className="btn btn-sm btn-default"
                                 value="Tìm kiếm" onClick={this.eventClick} />
                         </div>
                     </div>
                     <div className="col-lg-12 col-md-12" id="div-search" style={{ 'margin-bottom': '10px', 'display': 'none' }}>
-                        <div className="col-lg-4 col-md-6">
-                            <label className="col-md-2 control-label">tiet bat dau</label>
-                            <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-TimeStart" />
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
-                            <label className="col-md-2 control-label">tiet ket thuc</label>
-                            <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-TimeEnd" />
-                            </div>
-                        </div>
                         <div className="col-lg-3 col-md-6">
-                            <label className="col-md-2 control-label">thu</label>
+                            <label className="col-md-2 control-label">Mã</label>
                             <div className="col-md-10">
-                                <input type="text" className="form-control" id="keysearch-DayInWeek" />
+                                <input type="text" className="form-control" id="keysearch-CodeView" />
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-12">
@@ -173,15 +157,16 @@ var ListRow = React.createClass({
         $("#ConfirmModal").modal('hide');
         var code = $("#idRemove").val();
         $.ajax({
-            url: "/coursetime/delete",
+            url: "/room/delete",
             data: { id: code }, //truyen id(=CODE) len de xoa
             dataType: 'json',
             success: function (data) {
                 if (data.sussess >= 0) {
-                    this.loadData();
-                    $("#NotificationModal h5").empty().append('Xóa thành công!');
+                    this.loadData(); //xoa xong load lai du lieu
+                    //$("#NotificationModal h5").empty().append('Xóa thành công!');
                     //$("#NotificationModal").modal('show');
                 } else {
+                    //try to waiting
                     $("#NotificationModal h5").empty().append('Không xóa được bản ghi!');
                     $("#NotificationModal").modal('show');
                 }
@@ -215,16 +200,15 @@ var ListRow = React.createClass({
                             <th>STT</th>
                             <th>Code</th>
                             <th>Codeview</th>
-                            <th>Tiet bat dau</th>
-                            <th>Tiet ket thuc</th>
-                            <th>Thu</th>
+                            <th>Tang</th>
+                            <th>Ma toa nha</th>
                         </tr>
                     </thead>
                     <tbody>{listRow}</tbody>
                 </table>
 
                 <div id="paginateBox">
-                    <div id="pagination" className="pagination">
+                    <div id="pagiroom" className="pagiroom">
 
                     </div>
                 </div>
@@ -275,14 +259,15 @@ var RowDetail = React.createClass({
                 <td>{this.props.index}</td>
                 <td>{this.props.item.CODE}</td>
                 <td>{this.props.item.CODEVIEW}</td>
-                <td>{this.props.item.TIMESTART}</td>
-                <td>{this.props.item.TIMEEND}</td>
-                <td>{this.props.item.DAYINWEEK}</td>
-                <td><input type="button" className="btn btn-sm btn-primary" value="Sửa" onClick={() => this.props.setEdit("Sửa bản ghi", this.props.item)} />
+                <td>{this.props.item.NUMBERFLOOR}</td>
+                <td>{this.props.item.BUILDINGCODE}</td>
+                <td>
+                    <input type="button" className="btn btn-sm btn-primary" value="Sửa" onClick={() => this.props.setEdit("Sửa bản ghi", this.props.item)} />
                     &nbsp; &nbsp;
                     <input type="button" className="btn btn-sm btn-danger" value="Xóa" onClick={this.handleRemove} />
+
                 </td>
-            </tr >
+            </tr>
         );
     }
 });
@@ -305,48 +290,41 @@ var NewRow = React.createClass({
     handleSubmit: function () {
         //Lay gia tri tu cac thanh phan giao dien
 
-        //var CODE = this.refs.CODE.getDOMNode().value;
-        //console.log("code");
+        var CODE = this.refs.CODE.getDOMNode().value;
+        console.log("code");
 
-        var TIMESTART = this.refs.TIMESTART.getDOMNode().value;
-        console.log("timestart");
-        var TIMEEND = this.refs.TIMEEND.getDOMNode().value;
-        console.log("timeend");
-        var DAYINWEEK = this.refs.DAYINWEEK.getDOMNode().value;
-        console.log("dayinweek");
+        var CODEVIEW = this.refs.CODEVIEW.getDOMNode().value;
+        console.log("codeview");
+
+        var NUMBERFLOOR = this.refs.NUMBERFLOOR.getDOMNode().value;
+        console.log("codeview");
+
+        var BUILDING = this.refs.BUILDINGCODE.getDOMNode().value;
+        console.log("codeview");
 
         var data = {
             CODE: CODE,
             CODEVIEW: CODEVIEW,
-            TIMESTART: TIMESTART,
-            TIMEEND: TIMEEND,
-            DAYINWEEK: DAYINWEEK,
-            keysearchTimeStart: $.trim($('#keysearch-TimeStart').val()),
-            keysearchTimeEnd: $.trim($('#keysearch-TimeEnd').val()),
-            keysearchDayInWeek: $.trim($('#keysearch-DayInWeek').val()),
+            NUMBERFLOOR: NUMBERFLOOR,
+            BUILDINGCODE: BUILDINGCODE,
+            keysearchCodeView: $.trim($('#keysearch-CodeView').val()),
+            keysearchName: $.trim($('#keysearch-Name').val()),
+        }
+        if (CODEVIEW == "") {
+            alert("Chưa nhập mã");
+            $("#UpdateModal").modal("show");
 
-        }
-        if (TIMESTART == "") {
-            alert("Chưa nhập tiet bat dau");
-            $("#UpdateModal").modal("show");
+
+
+
+
             return false;
-        }
-        if (TIMEEND == "") {
-            alert("Chưa nhập tiet ket thuc");
-            $("#UpdateModal").modal("show");
-            return false;
-        }
-        if (DAYINWEEK == "") {
-            alert("Chưa nhập thu");
-            $("#UpdateModal").modal("show");
-            return false;
-        }
-        else {
+        } else {
 
 
             //Add or edit 1 department
             $.ajax({
-                url: "/coursetime/update",
+                url: "/room/update",
                 type: 'POST',
                 data: data,
                 dataType: 'json',
@@ -372,37 +350,35 @@ var NewRow = React.createClass({
         }
     },
 
-    //changeEvent: function (e) {
-    //    var data = new FormData();
-    //    var files = e.target.files;
-    //    console.log("Get file");
-    //    for (var x = 0; x < files.length; x++) {
-    //        data.append("file" + x, files[x]);
-    //        console.log('Have file');
-    //    }
-    //    $.ajax({
-    //        url: "/coursetime/post",
-    //        type: "POST",
-    //        data: data,
-    //        contentType: false,
-    //        processData: false,
-    //        success: function (data) {
-    //            console.log(data.sussess);
-    //            if (data.sussess >= 0) {
-    //                console.log(data.filename);
+    changeEvent: function (e) {
+        var data = new FormData();
+        var files = e.target.files;
+        console.log("Get file");
+        for (var x = 0; x < files.length; x++) {
+            data.append("file" + x, files[x]);
+            console.log('Have file');
+        }
+        $.ajax({
+            url: "/room/post",
+            type: "POST",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log(data.sussess);
+                if (data.sussess >= 0) {
+                    console.log(data.filename);
 
-    //            }
-    //        }.bind(this)
-    //    }).done(function () {
-    //        console.log("xong roi");
+                }
+            }.bind(this)
+        }).done(function () {
+            console.log("xong roi");
 
-    //    });
-
-
-    //},
+        });
 
 
-    //update
+    },
+
     render: function () {
         console.log("Ren new row here");
 
@@ -419,26 +395,34 @@ var NewRow = React.createClass({
                             <h4 className="box-title" id="titleOption">Thêm bản ghi mới</h4>
                         </div>
                         <div className="modal-body modalScroll">
+
                             <form className="form-horizontal">
                                 <div className="box-body">
                                     <div className="form-group col-sm-12">
-                                        <label className="col-sm-4 control-label">Tiet bat dau</label>
+                                        <label className="col-sm-4 control-label">Code</label>
                                         <div className="col-sm-4 col-md-4">
-                                            <input type="text" className="form-control" ref="TIMESTART" id="TIMESTART" />
+                                            <input type="text" className="form-control" ref="CODE" id="CODE" />                                        </div>
+                                    </div>
+                                    <div className="form-group col-sm-12">
+                                        <label className="col-sm-4 control-label">Codeview</label>
+                                        <div className="col-sm-4 col-md-4">
+                                            <input type="text" className="form-control" ref="CODEVIEW" id="CODEVIEW" />
                                         </div>
                                     </div>
                                     <div className="form-group col-sm-12">
-                                        <label className="col-sm-4 control-label">Tiet ket thuc</label>
-                                        <div className="col-sm-4 col-md-4">
-                                            <input type="text" className="form-control" ref="TIMEEND" id="TIMEEND" />
+                                        <label className="col-sm-4 control-label">Tang</label>
+                                        <div className="col-sm-8">
+                                            <input type="text" className="form-control" ref="NUMBERFLOOR" id="NUMBERFLOOR" />
                                         </div>
                                     </div>
                                     <div className="form-group col-sm-12">
-                                        <label className="col-sm-4 control-label">Thu</label>
-                                        <div className="col-sm-4 col-md-4">
-                                            <input type="text" className="form-control" ref="DAYINWEEK" id="DAYINWEEK" />
+                                        <label className="col-sm-4 control-label">Ma toa nha</label>
+                                        <div className="col-sm-8">
+                                            <input type="text" className="form-control" ref="BUILDINGCODE" id="BUILDINGCODE" />
                                         </div>
                                     </div>
+                                    
+
                                 </div>
                             </form>
 
